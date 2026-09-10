@@ -16,8 +16,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Build APK inside App Directory
-      working-directory: ./app
+    - name: Build APK
       run: |
         gradle wrapper --gradle-version 8.2
         ./gradlew assembleDebug
