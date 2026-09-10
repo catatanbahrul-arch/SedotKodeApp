@@ -1,5 +1,5 @@
 package com.sedotkode.app
-import android.view.accessibility.AccessibilityEvent
+
 import android.accessibilityservice.AccessibilityService
 import android.content.Context
 import android.graphics.Color
@@ -7,17 +7,20 @@ import android.graphics.PixelFormat
 import android.os.Bundle
 import android.view.Gravity
 import android.view.WindowManager
+import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import android.widget.Button
 import android.widget.Toast
+
 class PasteService : AccessibilityService() {
     private lateinit var windowManager: WindowManager
     private lateinit var btnPaste: Button
+
     override fun onServiceConnected() {
         super.onServiceConnected()
         windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
         btnPaste = Button(this).apply {
-            text = "📝 Paste"
+            text = "📋 Paste"
             setBackgroundColor(Color.parseColor("#16A34A"))
             setTextColor(Color.WHITE)
             textSize = 16f
@@ -37,6 +40,7 @@ class PasteService : AccessibilityService() {
         }
         try { windowManager.addView(btnPaste, params) } catch (e: Exception) {}
     }
+
     private fun suntikkanTeks() {
         val prefs = getSharedPreferences("BrankasKode", Context.MODE_PRIVATE)
         val teksTersimpan = prefs.getString("kode_tersimpan", "")
@@ -52,10 +56,11 @@ class PasteService : AccessibilityService() {
             kotakKetik.performAction(AccessibilityNodeInfo.ACTION_SET_TEXT, argument)
             Toast.makeText(this, "✅ Boom! Teks ter-paste", Toast.LENGTH_SHORT).show()
         } else {
-            Toast.makeText(this, "Sentuh area kotak ketik terlebih dahulu!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Sentuh area kotak ketik terlebih dahulu", Toast.LENGTH_SHORT).show()
         }
     }
-    override fun onAccessibilityEvent(event: android.accessibilityservice.AccessibilityEvent?) {}
+
+    override fun onAccessibilityEvent(event: AccessibilityEvent?) {}
     override fun onInterrupt() {}
     override fun onDestroy() {
         super.onDestroy()
