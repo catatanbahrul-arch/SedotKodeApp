@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#263238"
+    android:padding="10dp">
+    
+    <Button
+        android:id="@+id/btn_paste_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:text="📋 PASTE TEKS KE APLIKASI"
+        android:backgroundTint="#16A34A"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_marginBottom="10dp"/>
+        
+    <Button
+        android:id="@+id/btn_switch_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="🔄 Ganti ke Keyboard Bawaan"
+        android:backgroundTint="#455A64"
+        android:textColor="#FFFFFF"/>
+</LinearLayout>
