@@ -1,0 +1,16 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+android {
+    namespace 'com.sedotkode.app'
+    compileSdk 33
+    defaultConfig {
+        applicationId "com.sedotkode.app"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+    }
+}
+dependencies {}

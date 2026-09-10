@@ -1,0 +1,6 @@
+.config/
+.git/
+node_modules/
+fb-bot/
+*.apk
+.DS_Store
