@@ -1,4 +1,5 @@
 package com.sedotkode.app
+import android.view.accessibility.AccessibilityEvent
 import android.accessibilityservice.AccessibilityService
 import android.content.Context
 import android.graphics.Color
