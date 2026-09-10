@@ -1,32 +1,39 @@
 package com.sedotkode.app
+
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.Settings
 import android.widget.Toast
+
 class MainActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val textMasuk = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)
-        if (textMasuk != null) {
+
+        var teksMasuk: String? = null
+
+        // JALUR 1: Tangkap dari opsi Titik Tiga (Context Menu)
+        if (intent.action == Intent.ACTION_PROCESS_TEXT) {
+            teksMasuk = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT)?.toString()
+        }
+        // JALUR 2: Tangkap dari opsi Bagikan (Share)
+        else if (intent.action == Intent.ACTION_SEND && intent.type == "text/plain") {
+            teksMasuk = intent.getStringExtra(Intent.EXTRA_TEXT)
+        }
+
+        // Simpan teks jika ada yang masuk
+        if (!teksMasuk.isNullOrEmpty()) {
             val prefs = getSharedPreferences("BrankasKode", Context.MODE_PRIVATE)
-            prefs.edit().putString("kode_tersimpan", textMasuk.toString()).apply()
-            Toast.makeText(this, "✅ Ribuan baris kode berhasil diamankan!", Toast.LENGTH_SHORT).show()
-            finish()
-            return
+            prefs.edit().putString("kode_tersimpan", teksMasuk).apply()
+            Toast.makeText(this, "✅ Teks berhasil disedot!", Toast.LENGTH_SHORT).show()
+        } else {
+            // Jika aplikasi dibuka biasa dari ikon layar utama
+            if (intent.action == Intent.ACTION_MAIN) {
+                Toast.makeText(this, "Sedot Kode Aktif! Blok teks atau Bagikan teks ke aplikasi ini.", Toast.LENGTH_LONG).show()
+            }
         }
-        mintaIzin()
-    }
-    private fun mintaIzin() {
-        if (!Settings.canDrawOverlays(this)) {
-            Toast.makeText(this, "Izinkan 'Tampil di atas aplikasi lain'", Toast.LENGTH_LONG).show()
-            startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
-            return
-        }
-        Toast.makeText(this, "Aktifkan Layanan Aksesibilitas", Toast.LENGTH_LONG).show()
-        startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
+
+        // Langsung tutup activity agar layar kembali ke aplikasi sebelumnya tanpa jeda
         finish()
     }
 }
